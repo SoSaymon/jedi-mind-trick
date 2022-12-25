@@ -6,7 +6,7 @@ import {BrowserRouter} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 
 import 'normalize.css';
-import './style/index.scss';
+import './styles/index.scss';
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
