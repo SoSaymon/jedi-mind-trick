@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'Star Jedi Hollow';
+    src: url('../fonts/StarJediHollow.ttf') format('truetype'),
+            url('../fonts/StarJediHollow.woff') format('woff'),
+            url('../fonts/StarJediHollow.woff2') format('woff2');
+}
+
+body {
+    background-color: #fafafa;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
