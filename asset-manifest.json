@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/jedi-mind-trick/static/css/main.75ecbb27.css",
+    "main.js": "/jedi-mind-trick/static/js/main.5e9df2c7.js",
+    "static/js/787.59d65779.chunk.js": "/jedi-mind-trick/static/js/787.59d65779.chunk.js",
+    "static/media/homepage-img.jpg": "/jedi-mind-trick/static/media/homepage-img.4c012343345c0cc70dbf.jpg",
+    "static/media/StarJediHollow.ttf": "/jedi-mind-trick/static/media/StarJediHollow.1e1fa693fd5d14671bc5.ttf",
+    "static/media/StarJediHollow.woff": "/jedi-mind-trick/static/media/StarJediHollow.71675893f208ef2c1c81.woff",
+    "static/media/StarJediHollow.woff2": "/jedi-mind-trick/static/media/StarJediHollow.0ee98e6a609ed9795b5c.woff2",
+    "static/media/logo.svg": "/jedi-mind-trick/static/media/logo.bd5ce45d18251e11aec15e5bac022a0e.svg",
+    "index.html": "/jedi-mind-trick/index.html",
+    "main.75ecbb27.css.map": "/jedi-mind-trick/static/css/main.75ecbb27.css.map",
+    "main.5e9df2c7.js.map": "/jedi-mind-trick/static/js/main.5e9df2c7.js.map",
+    "787.59d65779.chunk.js.map": "/jedi-mind-trick/static/js/787.59d65779.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.75ecbb27.css",
+    "static/js/main.5e9df2c7.js"
+  ]
+}
