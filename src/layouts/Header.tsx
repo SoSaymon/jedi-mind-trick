@@ -12,6 +12,7 @@ export const Header = () => {
 
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
+		//TODO: Add functionality
 	}
 	return (
 		<header className={'bg-smoky-black header'}>
