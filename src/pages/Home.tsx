@@ -2,17 +2,18 @@ import {useEffect} from "react";
 import {Button} from "../components/Button";
 import img from '../img/homepage-img.jpg';
 import logo from '../img/logo.svg';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export const Home = () => {
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         document.title = "Homepage";
     }, []);
 
     const handleClick = () => {
-        console.log("Button clicked");
-        // TODO: Add functionality, change page to game page
+        navigate('/game-select');
     }
     return (
         <>
