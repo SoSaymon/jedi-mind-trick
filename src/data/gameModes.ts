@@ -1,26 +1,26 @@
 export const gameModes = [
   {
     "name": "Planets",
-    "path": "/planets"
+    "mode": "planets"
   },
   {
     "name": "Spaceships",
-    "path": "/spaceships"
+    "mode": "spaceships"
   },
   {
   "name": "Vehicles",
-  "path": "/vehicles"
+  "mode": "vehicles"
 },
   {
   "name": "People",
-  "path": "/people"
+  "mode": "people"
 },
   {
   "name": "Films",
-  "path": "/films"
+  "mode": "films"
 },
   {
   "name": "Species",
-  "path": "/species"
+  "mode": "species"
 }
 ]
