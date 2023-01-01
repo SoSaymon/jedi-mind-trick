@@ -1,15 +1,16 @@
 import {useNavigate} from "react-router-dom";
+import {useAppDispatch} from "../hooks/redux";
+import {setGameMode} from "../game/slices/gameModeSlice";
 
 interface GameSelectButtonProps {
     name: string;
     mode: string;
 }
 export const GameSelectButton = ({name, mode}: GameSelectButtonProps) => {
-
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const handleClick = (mode: string) => {
-        console.log("clicked", mode);
-        //send the chosen mode to global state in redux
+        dispatch(setGameMode(mode));
         navigate('/game');
     }
     return (
