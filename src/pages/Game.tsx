@@ -6,16 +6,19 @@ import {GameLoader} from "../components/GameLoader";
 export const Game = () => {
     const dispatch = useAppDispatch();
     const isApiDataLoaded = useAppSelector(state => state.apiDataAvailable.apiDataAvailable);
+    const gameMode = useAppSelector(state => state.gameMode.gameMode);
     useEffect(() => {
-        document.title = "Question 1/10";
-        console.log("isApiDataLoaded", isApiDataLoaded);
-        let timer = setTimeout(() => {
+        const timer = () => setTimeout(() => {
             dispatch(setApiDataAvailable(true));
         }, 1000);
-        return () => {
-            clearTimeout(timer);
+        document.title = "Question 1/10";
+        console.log("isApiDataLoaded", isApiDataLoaded);
+        console.log("gameMode", gameMode);
+        if (!isApiDataLoaded) {
+            timer();
         }
-    }, [dispatch, isApiDataLoaded]);
+        console.log("isApiDataLoaded", isApiDataLoaded);
+    }, [dispatch, gameMode, isApiDataLoaded]);
     return (
         isApiDataLoaded ?
             <section className={"flex justify-center w-full min-h-full pt-2.5 pb-16 px-5 bg-lotion game"}>
