@@ -11,7 +11,7 @@ export const Game = () => {
         console.log("isApiDataLoaded", isApiDataLoaded);
         let timer = setTimeout(() => {
             dispatch(setApiDataAvailable(true));
-        }, 10000);
+        }, 1000);
         return () => {
             clearTimeout(timer);
         }
