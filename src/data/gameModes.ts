@@ -5,7 +5,7 @@ export const gameModes = [
   },
   {
     "name": "Spaceships",
-    "mode": "spaceships"
+    "mode": "starships"
   },
   {
   "name": "Vehicles",

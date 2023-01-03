@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../hooks/redux";
-import {setGameMode} from "../game/slices/gameModeSlice";
+import {setApiUrl} from "../game/slices/apiDataSlice";
 
 interface GameSelectButtonProps {
     name: string;
@@ -10,7 +10,7 @@ export const GameSelectButton = ({name, mode}: GameSelectButtonProps) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const handleClick = (mode: string) => {
-        dispatch(setGameMode(mode));
+        dispatch(setApiUrl('https://swapi.dev/api/' + mode + '/'))
         navigate('/game');
     }
     return (

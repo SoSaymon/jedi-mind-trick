@@ -1,26 +1,15 @@
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {setApiDataAvailable} from "../game/slices/apiDataAvailiableSlice";
 import {GameLoader} from "../components/GameLoader";
 
 export const Game = () => {
-    const dispatch = useAppDispatch();
-    const isApiDataLoaded = useAppSelector(state => state.apiDataAvailable.apiDataAvailable);
-    const gameMode = useAppSelector(state => state.gameMode.gameMode);
+    const isApiDataLoaded = useAppSelector(state => state.apiData.apiDataAvailable);
     useEffect(() => {
-        const timer = () => setTimeout(() => {
-            dispatch(setApiDataAvailable(true));
-        }, 1000);
         document.title = "Question 1/10";
         console.log("isApiDataLoaded", isApiDataLoaded);
-        console.log("gameMode", gameMode);
-        if (!isApiDataLoaded) {
-            timer();
-        }
-        console.log("isApiDataLoaded", isApiDataLoaded);
-    }, [dispatch, gameMode, isApiDataLoaded]);
+    }, [isApiDataLoaded]);
     return (
-        isApiDataLoaded ?
+        isApiDataLoaded ? // change to isQuestionReady
             <section className={"flex justify-center w-full min-h-full pt-2.5 pb-16 px-5 bg-lotion game"}>
             <div className={"flex flex-col justify-center items-center container w-full h-full game__container"}>
                 <div className={"flex justify-between items-center w-full h-1/5 mb-5 container__ui"}>

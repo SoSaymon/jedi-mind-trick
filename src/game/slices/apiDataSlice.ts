@@ -1,17 +1,19 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 interface ApiDataState {
     url: string;
-    category?: string;
-    data: any;
-    error?: string;
+    category: string;
+    data: string;
+    error: string;
+    apiDataAvailable: boolean;
 }
 
 const initialState: ApiDataState = {
     url: '',
     category: '',
-    data: null,
+    data: '',
     error: '',
+    apiDataAvailable: false,
 }
 
 export const apiDataSlice = createSlice({
@@ -20,6 +22,7 @@ export const apiDataSlice = createSlice({
     reducers: {
         setApiData: (state, action) => {
             state.data = action.payload;
+            console.log("Url", action.type);
         },
         setApiError: (state, action) => {
             state.error = action.payload;
@@ -30,8 +33,11 @@ export const apiDataSlice = createSlice({
         setApiCategory: (state, action) => {
             state.category = action.payload;
         },
+        setApiDataAvailable: (state, action: PayloadAction<boolean>) => {
+            state.apiDataAvailable = action.payload;
+        },
     }
 });
 
-export const {setApiData, setApiError, setApiCategory, setApiUrl} = apiDataSlice.actions;
+export const {setApiData, setApiError, setApiCategory, setApiDataAvailable, setApiUrl} = apiDataSlice.actions;
 export default apiDataSlice.reducer;
