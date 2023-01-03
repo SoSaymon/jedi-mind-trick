@@ -6,7 +6,7 @@ import {fetchApiDataMiddleware} from "../middleware/fetchApiDataMiddleware";
 export const store = configureStore({
     reducer: {
         questions: questionsSlice.reducer,
-        apiData: apiDataSlice.reducer, //why is this not working?
+        apiData: apiDataSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(fetchApiDataMiddleware),
 });

@@ -4,10 +4,16 @@ import {GameLoader} from "../components/GameLoader";
 
 export const Game = () => {
     const isApiDataLoaded = useAppSelector(state => state.apiData.apiDataAvailable);
+
     useEffect(() => {
         document.title = "Question 1/10";
+    }, []);
+
+
+    useEffect(() => {
         console.log("isApiDataLoaded", isApiDataLoaded);
     }, [isApiDataLoaded]);
+
     return (
         isApiDataLoaded ? // change to isQuestionReady
             <section className={"flex justify-center w-full min-h-full pt-2.5 pb-16 px-5 bg-lotion game"}>
