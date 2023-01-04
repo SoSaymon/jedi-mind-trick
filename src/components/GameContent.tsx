@@ -1,27 +1,37 @@
-import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {useEffect} from "react";
+import {useAppSelector} from "../hooks/redux";
+import {useEffect, useState} from "react";
+import {store} from "../store/store";
 
 interface GameContentProps {
     questionNumber: number;
 }
 
 export const GameContent = ({questionNumber}: GameContentProps) => {
-    const dispatch = useAppDispatch();
-    let questionsString = useAppSelector(state => state.questions.questions);
+    const [questionsString, setQuestionsString] = useState("");
     let currentQuestion = '';
-    // if (questionsString) {
-    //     questionsString = questionsString.slice(1)
-    //     questionsString = questionsString.slice(0, -1)
-    //     console.log(questionsString)
-    // }
+
+    const getQuestions = async () => {
+        const state = store.getState();
+        return state.questions;
+    }
+
     useEffect(() => {
         return () => {
-            try {
-                const questions = JSON.parse(questionsString);
-                currentQuestion = questions[questionNumber].question;
-                console.log("currentQuestion", currentQuestion)
-            } catch (e) {
-                console.log(e)
+            if (questionsString === '') {
+                getQuestions().then((data) => {
+                    setQuestionsString(data.questions);
+                    console.log("Effect", questionsString);
+                    currentQuestion = questionsString[questionNumber];
+                })
+            }
+            if (questionsString !== '') {
+                try {
+                    const questions = JSON.parse(questionsString);
+                    currentQuestion = questions[questionNumber].question;
+                    console.log("currentQuestion", currentQuestion)
+                } catch (e) {
+                    console.log(e)
+                }
             }
             console.log("Current Question", currentQuestion)
         };

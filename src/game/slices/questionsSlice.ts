@@ -25,8 +25,10 @@ export const questionsSlice = createSlice({
         setCurrentQuestionNumber: (state, action) => {
             state.currentQuestionNumber = action.payload;
         }
+
     }
 });
 
 export const {setQuestions, setNumberOfQuestions, setCurrentQuestionNumber} = questionsSlice.actions;
+
 export default questionsSlice.reducer;
