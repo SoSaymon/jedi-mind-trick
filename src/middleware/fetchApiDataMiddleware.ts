@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {setApiData, setApiError, setApiUrl, setApiDataAvailable} from "../game/slices/apiDataSlice";
-
 export const fetchApiDataMiddleware = (store: any) => (next: any) => async (action: any) => {
     if (action.type === setApiUrl.type) {
         try {
@@ -15,6 +14,7 @@ export const fetchApiDataMiddleware = (store: any) => (next: any) => async (acti
         if (store.getState().apiData.data !== '') {
             store.dispatch(setApiDataAvailable(true));
         }
+
     }
     return next(action);
 }

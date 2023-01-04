@@ -1,14 +1,15 @@
-import {Question} from "../classes/Question";
 import {createSlice} from "@reduxjs/toolkit";
 
 interface QuestionsSliceState {
-    questions: Question[];
+    questions: string;
     numberOfQuestions: number;
+    currentQuestionNumber: number;
 }
 
 const initialState: QuestionsSliceState = {
-    questions: [],
-    numberOfQuestions: 0
+    questions: '',
+    numberOfQuestions: 0,
+    currentQuestionNumber: 0,
 }
 
 export const questionsSlice = createSlice({
@@ -20,9 +21,12 @@ export const questionsSlice = createSlice({
         },
         setNumberOfQuestions: (state, action) => {
             state.numberOfQuestions = action.payload;
+        },
+        setCurrentQuestionNumber: (state, action) => {
+            state.currentQuestionNumber = action.payload;
         }
     }
 });
 
-export const {setQuestions, setNumberOfQuestions} = questionsSlice.actions;
+export const {setQuestions, setNumberOfQuestions, setCurrentQuestionNumber} = questionsSlice.actions;
 export default questionsSlice.reducer;
