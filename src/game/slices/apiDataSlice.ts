@@ -22,7 +22,6 @@ export const apiDataSlice = createSlice({
     reducers: {
         setApiData: (state, action) => {
             state.data = action.payload;
-            console.log("Url", action.type);
         },
         setApiError: (state, action) => {
             state.error = action.payload;

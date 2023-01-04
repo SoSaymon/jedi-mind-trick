@@ -1,6 +1,8 @@
 import {useAppSelector} from "../hooks/redux";
 import {useEffect, useState} from "react";
 import {store} from "../store/store";
+import {GameContentSubmitButton} from "./GameContentSubmitButton";
+import {GameContentAnswerButton} from "./GameContentAnswerButton";
 
 interface GameContentProps {
     questionNumber: number;
@@ -8,36 +10,58 @@ interface GameContentProps {
 
 export const GameContent = ({questionNumber}: GameContentProps) => {
     const [questionsString, setQuestionsString] = useState("");
-    let currentQuestion = '';
+    const [currentQuestion, setCurrentQuestion] = useState("");
+    const [answers, setAnswers] = useState<any[]>([]);
+
+    const [isAnswerSelected, setIsAnswerSelected] = useState(false);
+    const [isAnswered, setIsAnswered] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    let answersList: any[] = [];
 
     const getQuestions = async () => {
         const state = store.getState();
         return state.questions;
     }
 
+    const handleAnswerClick = (isCorrect: boolean) => {
+        setIsAnswerSelected(true);
+        setIsCorrect(isCorrect);
+    }
+
+    const handleSubmitClick = () => {
+        setIsSubmitted(true);
+        setIsAnswered(true);
+    }
+
     useEffect(() => {
-        return () => {
-            if (questionsString === '') {
+            if (questionsString === "") {
                 getQuestions().then((data) => {
                     setQuestionsString(data.questions);
-                    console.log("Effect", questionsString);
-                    currentQuestion = questionsString[questionNumber];
                 })
             }
-            if (questionsString !== '') {
+            if (questionsString !== "") {
                 try {
                     const questions = JSON.parse(questionsString);
-                    currentQuestion = questions[questionNumber].question;
-                    console.log("currentQuestion", currentQuestion)
+                    setCurrentQuestion(questions[questionNumber].question);
+                    setAnswers(questions[questionNumber].answers);
+
+                    if (answers.length > 0) {
+                        console.log(typeof answers);
+                    }
+
                 } catch (e) {
-                    console.log(e)
+                    console.error("Error parsing questions", e);
                 }
             }
-            console.log("Current Question", currentQuestion)
-        };
-    }, [questionsString, questionNumber]);
+    }, [questionsString, questionNumber, currentQuestion]);
 
-    // const answers = useAppSelector(state => state.questions.answers);
+    if (answers.length > 0) {
+        answersList = answers.map((answer, index) => (
+            <GameContentAnswerButton key={index} answer={answer} isAnswerSelected={isAnswerSelected} isCorrect={isCorrect} handleAnswerClick={handleAnswerClick}/>
+        ))
+    }
 
     const numberOfQuestions = useAppSelector(state => state.questions.numberOfQuestions);
     return (
@@ -56,14 +80,11 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
                         <span>{currentQuestion === '' ? "Question" : currentQuestion}</span>
                     </div>
                     <div className={"flex flex-col justify-center items-center w-80 h-full mb-6 game__answers"}>
-                        <button className={"flex justify-center items-center w-full h-20 rounded-full mb-5 text-xl font-medium bg-light-silver"}>Answer 1</button>
-                        <button className={"flex justify-center items-center w-full h-20 rounded-full mb-5 text-xl font-medium bg-light-silver"}>Answer 2</button>
-                        <button className={"flex justify-center items-center w-full h-20 rounded-full mb-5 text-xl font-medium bg-light-silver"}>Answer 3</button>
-                        <button className={"flex justify-center items-center w-full h-20 rounded-full mb-5 text-xl font-medium bg-light-silver"}>Answer 4</button>
+                        {answersList}
                     </div>
                 </div>
                 <div className={"flex justify-center items-center w-full h-16 container__button"}>
-                    <button className={"flex justify-center items-center w-3/5 h-full rounded-full text-2xl font-bold text-white bg-green"}>Next</button>
+                    <GameContentSubmitButton isAnswerSelected={isAnswerSelected} isSubmitted={isSubmitted} handleButtonClick={handleSubmitClick}/>
                 </div>
             </div>
         </section>

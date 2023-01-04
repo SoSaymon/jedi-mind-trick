@@ -22,8 +22,7 @@ export const Game = () => {
             questions.push(questionsToDraw[randomIndex])
             questionsToDraw.splice(randomIndex, 1)
         }
-        const questionsString = JSON.stringify(questions)
-        console.log(questionsString)
+        const questionsString = JSON.stringify(questions);
         dispatch(setQuestions(questionsString));
     }, [dispatch])
 

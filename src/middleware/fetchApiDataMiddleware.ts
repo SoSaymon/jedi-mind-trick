@@ -6,10 +6,9 @@ export const fetchApiDataMiddleware = (store: any) => (next: any) => async (acti
             const res = await axios.get(action.payload);
             const data = res.data;
             store.dispatch(setApiData(data));
-            console.log("Data", data);
         } catch (err) {
             store.dispatch(setApiError(err));
-            console.log("Error", err);
+            console.error("Error", err);
         }
         if (store.getState().apiData.data !== '') {
             store.dispatch(setApiDataAvailable(true));
