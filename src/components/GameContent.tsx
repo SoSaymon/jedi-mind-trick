@@ -40,6 +40,14 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
     const handleAnswerClick = (isCorrect: boolean, index: number) => {
         const answer = document.getElementById(`answer${index}`);
         if (answer) {
+            if (selectedAnswer !== -1) {
+                const prevAnswer = document.getElementById(`answer${selectedAnswer}`);
+                if (prevAnswer) {
+                    prevAnswer.classList.remove("bg-yellow-sun");
+                    prevAnswer.classList.add("bg-light-silver");
+                }
+            }
+
             setIsAnswerSelected(true);
             setSelectedAnswer(index);
 
