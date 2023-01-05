@@ -1,18 +1,14 @@
 interface GameContentAnswerButtonProps {
+    index: number;
     answer: any;
-    isAnswerSelected: boolean;
-    isCorrect: boolean;
-
-    handleAnswerClick: (isCorrect: boolean) => void;
+    handleAnswerClick: (isCorrect: boolean, index: number) => void;
 }
 
-export const GameContentAnswerButton = ({answer, isAnswerSelected, isCorrect, handleAnswerClick}: GameContentAnswerButtonProps) => {
-    const isCorrectAnswer = answer.isCorrect;
-    const isAnswerSelectedLocal = isAnswerSelected;
-    const bgColor = "bg-light-silver";
+export const GameContentAnswerButton = ({index ,answer, handleAnswerClick}: GameContentAnswerButtonProps) => {
     return (
-        <button className={"flex justify-center items-center w-full h-20 rounded-full mb-5 text-xl font-medium duration-300 " + bgColor} onClick={() => handleAnswerClick(
-            answer.correct === "true"
+        <button id={`answer${index}`} className={"flex justify-center items-center w-full h-20 rounded-full mb-5 text-xl font-medium duration-300 bg-light-silver"} onClick={() => handleAnswerClick(
+            answer.correct === "true",
+            index
         )}>{answer.answer}</button>
     );
 }

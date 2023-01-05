@@ -1,8 +1,14 @@
-import {useAppSelector} from "../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {useEffect, useState} from "react";
 import {store} from "../store/store";
 import {GameContentSubmitButton} from "./GameContentSubmitButton";
 import {GameContentAnswerButton} from "./GameContentAnswerButton";
+import {
+    setCorrectAnsweredQuestions, setCurrentQuestionNumber,
+    setSkippedQuestions,
+    setWrongAnsweredQuestions
+} from "../game/slices/questionsSlice";
+import {useNavigate} from "react-router-dom";
 
 interface GameContentProps {
     questionNumber: number;
@@ -12,11 +18,23 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
     const [questionsString, setQuestionsString] = useState("");
     const [currentQuestion, setCurrentQuestion] = useState("");
     const [answers, setAnswers] = useState<any[]>([]);
+    const [selectedAnswer, setSelectedAnswer] = useState(-1);
+    const [correctAnswer, setCorrectAnswer] = useState(-1);
 
     const [isAnswerSelected, setIsAnswerSelected] = useState(false);
     const [isAnswered, setIsAnswered] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const dispatch = useAppDispatch();
+
+    //console log const's
+    const correctAnsweredQuestions = useAppSelector(state => state.questions.correctAnsweredQuestions);
+    const wrongAnsweredQuestions = useAppSelector(state => state.questions.wrongAnsweredQuestions);
+    const skippedQuestions = useAppSelector(state => state.questions.skippedQuestions);
+    // end of console log const's
+
+    const navigate = useNavigate();
 
     let answersList: any[] = [];
 
@@ -25,14 +43,48 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
         return state.questions;
     }
 
-    const handleAnswerClick = (isCorrect: boolean) => {
-        setIsAnswerSelected(true);
-        setIsCorrect(isCorrect);
+    const handleAnswerClick = (isCorrect: boolean, index: number) => {
+        const answer = document.getElementById(`answer${index}`);
+        if (answer) {
+            setIsAnswerSelected(true);
+
+            answer.classList.remove("bg-light-silver");
+            answer.classList.add("bg-yellow-sun");
+
+            setIsCorrect(isCorrect);
+        }
     }
 
-    const handleSubmitClick = () => {
-        setIsSubmitted(true);
-        setIsAnswered(true);
+    const handleSubmitClick = (mode: string) => {
+        switch (mode) {
+            case "submit":
+                setIsSubmitted(true);
+                if (isCorrect) {
+                    dispatch(setCorrectAnsweredQuestions(questionNumber));
+                } else if (!isCorrect) {
+                    dispatch(setWrongAnsweredQuestions(questionNumber));
+                }
+                break
+            case "next":
+                if (questionNumber < numberOfQuestions - 1) {
+                    dispatch(setCurrentQuestionNumber(questionNumber + 1));
+                    setIsAnswerSelected(false);
+                    setIsAnswered(false);
+                    setIsCorrect(false);
+                    setIsSubmitted(false);
+                } else if (questionNumber === numberOfQuestions - 1) {
+                    navigate("/results");
+                }
+                console.log("Correct", correctAnsweredQuestions);
+                console.log("Wrong", wrongAnsweredQuestions);
+                console.log("Skipped", skippedQuestions);
+                break
+            case "skip":
+                setIsAnswerSelected(true);
+                setIsSubmitted(true);
+                dispatch(setSkippedQuestions(questionNumber));
+                break
+        }
     }
 
     useEffect(() => {
@@ -46,11 +98,6 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
                     const questions = JSON.parse(questionsString);
                     setCurrentQuestion(questions[questionNumber].question);
                     setAnswers(questions[questionNumber].answers);
-
-                    if (answers.length > 0) {
-                        console.log(typeof answers);
-                    }
-
                 } catch (e) {
                     console.error("Error parsing questions", e);
                 }
@@ -58,9 +105,11 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
     }, [questionsString, questionNumber, currentQuestion]);
 
     if (answers.length > 0) {
-        answersList = answers.map((answer, index) => (
-            <GameContentAnswerButton key={index} answer={answer} isAnswerSelected={isAnswerSelected} isCorrect={isCorrect} handleAnswerClick={handleAnswerClick}/>
-        ))
+        answersList = answers.map((answer, index) => {
+            return(
+                <GameContentAnswerButton key={index} index={index} answer={answer} handleAnswerClick={handleAnswerClick}/>
+            )
+        })
     }
 
     const numberOfQuestions = useAppSelector(state => state.questions.numberOfQuestions);

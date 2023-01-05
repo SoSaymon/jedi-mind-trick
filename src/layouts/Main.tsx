@@ -12,7 +12,7 @@ export const Main = () => {
             <Route path={'/'} element={<Home/>}/>
             <Route path={'/game-select'} element={<GameSelect gameModes={gameModes}/>}/>
             <Route path={'/game'} element={<Game/>}/>
-            <Route path={'/game-final'} element={<GameFinal/>}/>
+            <Route path={'/results'} element={<GameFinal/>}/>
         </Routes>
     );
 }
