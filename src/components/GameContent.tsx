@@ -18,6 +18,7 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
     const [questionsString, setQuestionsString] = useState("");
     const [currentQuestion, setCurrentQuestion] = useState("");
     const [answers, setAnswers] = useState<any[]>([]);
+
     const [selectedAnswer, setSelectedAnswer] = useState(-1);
     const [correctAnswer, setCorrectAnswer] = useState(-1);
 
@@ -47,6 +48,7 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
         const answer = document.getElementById(`answer${index}`);
         if (answer) {
             setIsAnswerSelected(true);
+            setSelectedAnswer(index);
 
             answer.classList.remove("bg-light-silver");
             answer.classList.add("bg-yellow-sun");
@@ -59,12 +61,33 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
         switch (mode) {
             case "submit":
                 setIsSubmitted(true);
+
                 if (isCorrect) {
                     dispatch(setCorrectAnsweredQuestions(questionNumber));
+                    if (selectedAnswer !== -1) {
+                        const selectedAnswerElement = document.getElementById(`answer${selectedAnswer}`);
+                        if (selectedAnswerElement) {
+                            selectedAnswerElement.classList.remove("bg-yellow-sun");
+                            selectedAnswerElement.classList.add("bg-green");
+                        }
+                    }
                 } else if (!isCorrect) {
                     dispatch(setWrongAnsweredQuestions(questionNumber));
+                    if (selectedAnswer !== -1) {
+                        const selectedAnswerElement = document.getElementById(`answer${selectedAnswer}`);
+                        const correctAnswerElement = document.getElementById(`answer${correctAnswer}`);
+                        if (selectedAnswerElement) {
+                            selectedAnswerElement.classList.remove("bg-yellow-sun");
+                            selectedAnswerElement.classList.add("bg-coral-red");
+                            if (correctAnswerElement) {
+                                correctAnswerElement.classList.remove("bg-light-silver");
+                                correctAnswerElement.classList.add("bg-green");
+                            }
+                        }
+                    }
                 }
                 break
+
             case "next":
                 if (questionNumber < numberOfQuestions - 1) {
                     dispatch(setCurrentQuestionNumber(questionNumber + 1));
@@ -72,17 +95,43 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
                     setIsAnswered(false);
                     setIsCorrect(false);
                     setIsSubmitted(false);
+
+                    const selectedAnswerElement = document.getElementById(`answer${selectedAnswer}`);
+                    const correctAnswerElement = document.getElementById(`answer${correctAnswer}`);
+
+                    if (selectedAnswerElement) {
+                        const classNames = selectedAnswerElement.className.split(" ");
+                        const filteredClassNames = classNames.filter(className => !className.startsWith("bg-"));
+                        selectedAnswerElement.className = filteredClassNames.join(" ");
+                        selectedAnswerElement.classList.add("bg-light-silver");
+                    }
+
+                    if (correctAnswerElement) {
+                        const classNames = correctAnswerElement.className.split(" ");
+                        const filteredClassNames = classNames.filter(className => !className.startsWith("bg-"));
+                        correctAnswerElement.className = filteredClassNames.join(" ");
+                        correctAnswerElement.classList.add("bg-light-silver");
+                    }
+
+                    setSelectedAnswer(-1);
+                    setCorrectAnswer(-1);
+
+
                 } else if (questionNumber === numberOfQuestions - 1) {
                     navigate("/results");
                 }
+
                 console.log("Correct", correctAnsweredQuestions);
                 console.log("Wrong", wrongAnsweredQuestions);
                 console.log("Skipped", skippedQuestions);
+
                 break
+
             case "skip":
                 setIsAnswerSelected(true);
                 setIsSubmitted(true);
                 dispatch(setSkippedQuestions(questionNumber));
+
                 break
         }
     }
@@ -98,6 +147,7 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
                     const questions = JSON.parse(questionsString);
                     setCurrentQuestion(questions[questionNumber].question);
                     setAnswers(questions[questionNumber].answers);
+                    setCorrectAnswer(answers.findIndex((answer: any) => answer.correct === "true"));
                 } catch (e) {
                     console.error("Error parsing questions", e);
                 }

@@ -8,7 +8,7 @@ export const GameContentSubmitButton = ({isAnswerSelected, isSubmitted, handleBu
     const bgColor = isAnswerSelected ? "bg-green" : "bg-coral-red";
     const mode = isAnswerSelected ? isSubmitted ? "next" : "submit" : "skip";
     return (
-        <button className={"flex justify-center items-center w-3/5 h-full rounded-full text-2xl font-bold text-white " + bgColor} onClick={() => handleButtonClick(mode)}>{
+        <button className={"flex justify-center items-center w-3/5 h-full rounded-full text-2xl font-bold text-white duration-300 " + bgColor} onClick={() => handleButtonClick(mode)}>{
             isAnswerSelected ?
                 isSubmitted ?
                     "Next" : "Submit"
