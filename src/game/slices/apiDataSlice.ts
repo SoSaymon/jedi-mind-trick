@@ -38,5 +38,5 @@ export const apiDataSlice = createSlice({
     }
 });
 
-export const {setApiData, setApiError, setApiCategory, setApiDataAvailable, setApiUrl} = apiDataSlice.actions;
+export const {setApiData, setApiError, setApiDataAvailable, setApiUrl} = apiDataSlice.actions;
 export default apiDataSlice.reducer;

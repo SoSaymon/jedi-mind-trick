@@ -23,17 +23,10 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
     const [correctAnswer, setCorrectAnswer] = useState(-1);
 
     const [isAnswerSelected, setIsAnswerSelected] = useState(false);
-    const [isAnswered, setIsAnswered] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const dispatch = useAppDispatch();
-
-    //console log const's
-    const correctAnsweredQuestions = useAppSelector(state => state.questions.correctAnsweredQuestions);
-    const wrongAnsweredQuestions = useAppSelector(state => state.questions.wrongAnsweredQuestions);
-    const skippedQuestions = useAppSelector(state => state.questions.skippedQuestions);
-    // end of console log const's
 
     const navigate = useNavigate();
 
@@ -92,7 +85,6 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
                 if (questionNumber < numberOfQuestions - 1) {
                     dispatch(setCurrentQuestionNumber(questionNumber + 1));
                     setIsAnswerSelected(false);
-                    setIsAnswered(false);
                     setIsCorrect(false);
                     setIsSubmitted(false);
 
@@ -120,10 +112,6 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
                 } else if (questionNumber === numberOfQuestions - 1) {
                     navigate("/results");
                 }
-
-                console.log("Correct", correctAnsweredQuestions);
-                console.log("Wrong", wrongAnsweredQuestions);
-                console.log("Skipped", skippedQuestions);
 
                 break
 

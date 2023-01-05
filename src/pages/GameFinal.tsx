@@ -15,11 +15,11 @@ export const GameFinal = () => {
 
         for (let i = 0; i < numberOfQuestions;) {
             if (correctAnswers.includes(i)) {
-                scoreMarks.push(<ScoreMark key={i} scored={"true"} questionNumber={i}/>);
+                scoreMarks.push(<ScoreMark key={i} scored={"true"}/>);
             } else if (wrongAnswers.includes(i)) {
-                scoreMarks.push(<ScoreMark key={i} scored={"false"} questionNumber={i}/>);
+                scoreMarks.push(<ScoreMark key={i} scored={"false"}/>);
             } else {
-                scoreMarks.push(<ScoreMark key={i} scored={"skip"} questionNumber={i}/>);
+                scoreMarks.push(<ScoreMark key={i} scored={"skip"}/>);
             }
             i++;
         }
