@@ -5,7 +5,7 @@ export const fetchApiDataMiddleware = (store: any) => (next: any) => async (acti
     if (action.type === setApiUrl.type) {
         try {
             const res = await axios.get(action.payload);
-            const data = res.data;
+            const data = res.data.results;
             store.dispatch(setApiData(data));
         } catch (err) {
             store.dispatch(setApiError(err));

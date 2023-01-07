@@ -2,7 +2,7 @@
 <div style="text-align: center;"><h2>Use the force to control your mind</h2></div>
 
 ## What Is It?
-This is  a React and TypeScript-based web app that tests your Star Wars knowledge with questions about characters, planets, and events. Choose from different categories and see info on the films, including cast, crew, and plot. Improve your skills with instant feedback and compete on the leaderboard.
+This is  a React and TypeScript-based web app that tests your Star Wars knowledge with questionsPeople about characters, planets, and events. Choose from different categories and see info on the films, including cast, crew, and plot. Improve your skills with instant feedback and compete on the leaderboard.
 <p style="text-align: right">(<a href="#top">back to top</a>)</p>
 
 ## Built With
@@ -81,5 +81,5 @@ Contributions are what make the open source community such an amazing place to b
 <p style="text-align: right">(<a href="#top">back to top</a>)</p>
 
 ## Project Status
-This project is currently in development. Users can choose a category and answer questions. The app is fully responsive. The leaderboard is not yet implemented.
+This project is currently in development. Users can choose a category and answer questionsPeople. The app is fully responsive. The leaderboard is not yet implemented.
 <p style="text-align: right">(<a href="#top">back to top</a>)</p>

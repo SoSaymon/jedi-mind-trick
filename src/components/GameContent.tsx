@@ -4,7 +4,8 @@ import {store} from "../store/store";
 import {GameContentSubmitButton} from "./GameContentSubmitButton";
 import {GameContentAnswerButton} from "./GameContentAnswerButton";
 import {
-    setCorrectAnsweredQuestions, setCurrentQuestionNumber,
+    setCorrectAnsweredQuestions,
+    setCurrentQuestionNumber,
     setSkippedQuestions,
     setWrongAnsweredQuestions
 } from "../game/slices/questionsSlice";
@@ -17,7 +18,7 @@ interface GameContentProps {
 export const GameContent = ({questionNumber}: GameContentProps) => {
     const [questionsString, setQuestionsString] = useState("");
     const [currentQuestion, setCurrentQuestion] = useState("");
-    const [answers, setAnswers] = useState<any[]>([]);
+    let answers: any[] = []
 
     const [selectedAnswer, setSelectedAnswer] = useState(-1);
     const [correctAnswer, setCorrectAnswer] = useState(-1);
@@ -26,17 +27,32 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
     const [isCorrect, setIsCorrect] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
+    const apiData = useAppSelector(state => state.apiData.data);
+    // const [requiredAnotherApiCall, setRequiredAnotherApiCall] = useState<any[]>([]); // this will be useful when I'll add multi api calls support
+    const [requiredAnswer, setRequiredAnswer] = useState("");
+
+    // start of answers creator data
+    const [answerCreatorQuestionSubject, setAnswerCreatorQuestionSubject] = useState("");
+    const [answerCreatorCorrectAnswer, setAnswerCreatorCorrectAnswer] = useState("");
+    const [answerCreatorIncorrectAnswers, setAnswerCreatorIncorrectAnswers] = useState<any[]>([]);
+    // end of answers creator data
+
+    let currentObject: any = {};
+
     const dispatch = useAppDispatch();
 
     const navigate = useNavigate();
 
     let answersList: any[] = [];
 
+    let question: any = "";
+
     const getQuestions = async () => {
         const state = store.getState();
         return state.questions;
     }
 
+    // start handlers
     const handleAnswerClick = (isCorrect: boolean, index: number) => {
         const answer = document.getElementById(`answer${index}`);
         if (answer) {
@@ -131,24 +147,60 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
                 break
         }
     }
+    // end handlers
+
+    // start answers creator
+    const answersCreator = () => {
+        let randomIndex = Math.floor(Math.random() * apiData.length);
+        currentObject = apiData[randomIndex];
+        setAnswerCreatorQuestionSubject(currentObject.name);
+        setAnswerCreatorCorrectAnswer(currentObject[requiredAnswer]);
+
+        // create incorrect answers
+        let incorrectAnswers: any[] = [];
+
+        for (let i = 0; i < 3; i++) {
+            const randomObject = apiData[Math.floor(Math.random() * apiData.length)];
+            // @ts-ignore
+            if (randomObject[requiredAnswer] === currentObject[requiredAnswer] || incorrectAnswers.includes(randomObject[requiredAnswer])) {
+                continue;
+            }
+            // @ts-ignore
+            incorrectAnswers.push(randomObject[requiredAnswer]);
+        }
+
+        setAnswerCreatorIncorrectAnswers(incorrectAnswers);
+    }
+    // end answers creator
 
     useEffect(() => {
-            if (questionsString === "") {
-                getQuestions().then((data) => {
-                    setQuestionsString(data.questions);
-                })
+        if (questionsString === "") {
+            getQuestions().then((data) => {
+                setQuestionsString(data.questions);
+            })
+        }
+        if (questionsString !== "") {
+            try {
+                const questions = JSON.parse(questionsString);
+
+                // setting up states from questions received from redux store
+                setCurrentQuestion(questions[questionNumber].question);
+                // setRequiredAnotherApiCall(questions[questionNumber].requiredAnotherApiCall);
+                setRequiredAnswer(questions[questionNumber].requiredAnswer);
+                answersCreator();
+            } catch (e) {
+                console.error("Error parsing questionsPeople", e);
             }
-            if (questionsString !== "") {
-                try {
-                    const questions = JSON.parse(questionsString);
-                    setCurrentQuestion(questions[questionNumber].question);
-                    setAnswers(questions[questionNumber].answers);
-                    setCorrectAnswer(answers.findIndex((answer: any) => answer.correct === "true"));
-                } catch (e) {
-                    console.error("Error parsing questions", e);
-                }
-            }
+        }
     }, [questionsString, questionNumber, currentQuestion]);
+
+    if (answerCreatorQuestionSubject !== "" && currentQuestion !== "") {
+        question = currentQuestion.replace("INSERT_NAME", answerCreatorQuestionSubject);
+    }
+
+    if (answerCreatorCorrectAnswer !== "" && answerCreatorIncorrectAnswers.length > 0) {
+        answers = [answerCreatorCorrectAnswer, ...answerCreatorIncorrectAnswers];
+    }
 
     if (answers.length > 0) {
         answersList = answers.map((answer, index) => {
@@ -172,7 +224,7 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
                 </div>
                 <div className={"flex flex-col justify-center items-center w-full h-3/5 container__game"}>
                     <div className={"flex justify-center items-center w-1/3 mb-5 font-bold text-2xl game__question"}>
-                        <span>{currentQuestion === '' ? "Question" : currentQuestion}</span>
+                        <span>{currentQuestion === '' ? "Question" : question}</span>
                     </div>
                     <div className={"flex flex-col justify-center items-center w-80 h-full mb-6 game__answers"}>
                         {answersList}

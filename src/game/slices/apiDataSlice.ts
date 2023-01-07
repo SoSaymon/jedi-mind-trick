@@ -35,8 +35,15 @@ export const apiDataSlice = createSlice({
         setApiDataAvailable: (state, action: PayloadAction<boolean>) => {
             state.apiDataAvailable = action.payload;
         },
+        resetApiData: (state) => {
+            state.data = '';
+            state.error = '';
+            state.url = '';
+            state.category = '';
+            state.apiDataAvailable = false;
+        }
     }
 });
 
-export const {setApiData, setApiError, setApiDataAvailable, setApiUrl} = apiDataSlice.actions;
+export const {setApiData, setApiError, setApiDataAvailable, setApiUrl, setApiCategory, resetApiData} = apiDataSlice.actions;
 export default apiDataSlice.reducer;

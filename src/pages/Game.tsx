@@ -1,7 +1,8 @@
 import {useCallback, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {GameLoader} from "../components/GameLoader";
-import {questionsPlaceholderList} from "../data/questionsLists/questionsPlaceholderList";
+import {questionsPeople} from "../data/questionsLists/questionsPeople";
+import {questionsPlanets} from "../data/questionsLists/questionsPlanets";
 import {setNumberOfQuestions, setQuestions} from "../game/slices/questionsSlice";
 import {GameContent} from "../components/GameContent";
 
@@ -11,20 +12,30 @@ export const Game = () => {
 
     const questionNumber = useAppSelector(state => state.questions.currentQuestionNumber);
     const numberOfQuestions = useAppSelector(state => state.questions.numberOfQuestions);
+    const category = useAppSelector(state => state.apiData.category);
 
     const makeQuestions = useCallback((numberOfQuestions: number) => {
         dispatch(setNumberOfQuestions(numberOfQuestions));
+        let questionsToDraw: any[] = [];
 
-        const questionsToDraw = questionsPlaceholderList
-        const questions = [];
+        switch (category) {
+            case "people":
+                questionsToDraw = questionsPeople;
+                break;
+            case "planets":
+                questionsToDraw = questionsPlanets;
+                break;
+
+        }
+
+        const questionsArray: any[] = [];
         for (let i = 0; i < numberOfQuestions; i++) {
             const randomIndex = Math.floor(Math.random() * questionsToDraw.length)
-            questions.push(questionsToDraw[randomIndex])
-            questionsToDraw.splice(randomIndex, 1)
+            questionsArray.push(questionsToDraw[randomIndex]);
         }
-        const questionsString = JSON.stringify(questions);
+        const questionsString = JSON.stringify(questionsArray);
         dispatch(setQuestions(questionsString));
-    }, [dispatch])
+    }, [category, dispatch]);
 
     useEffect(() => {
         if (isApiDataLoaded) {
@@ -40,7 +51,7 @@ export const Game = () => {
     
 
     return (
-        isApiDataLoaded ? // change to isQuestionReady
+        isApiDataLoaded ?
             <GameContent questionNumber={questionNumber}/>
             :
             <GameLoader/>

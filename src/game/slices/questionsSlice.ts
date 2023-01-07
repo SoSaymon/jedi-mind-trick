@@ -40,9 +40,17 @@ export const questionsSlice = createSlice({
         setWrongAnsweredQuestions: (state, action) => {
             state.wrongAnsweredQuestions = state.wrongAnsweredQuestions.concat(action.payload);
         },
+        resetQuestions: (state) => {
+            state.questions = '';
+            state.numberOfQuestions = 0;
+            state.currentQuestionNumber = 0;
+            state.correctAnsweredQuestions = [];
+            state.skippedQuestions = [];
+            state.wrongAnsweredQuestions = [];
+        }
     }
 });
 
-export const {setQuestions, setNumberOfQuestions, setCurrentQuestionNumber, setCorrectAnsweredQuestions, setWrongAnsweredQuestions, setSkippedQuestions} = questionsSlice.actions;
+export const {setQuestions, setNumberOfQuestions, setCurrentQuestionNumber, setCorrectAnsweredQuestions, setWrongAnsweredQuestions, setSkippedQuestions, resetQuestions} = questionsSlice.actions;
 
 export default questionsSlice.reducer;
