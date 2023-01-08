@@ -5,6 +5,9 @@ import {questionsPeople} from "../data/questionsLists/questionsPeople";
 import {questionsPlanets} from "../data/questionsLists/questionsPlanets";
 import {setNumberOfQuestions, setQuestions} from "../game/slices/questionsSlice";
 import {GameContent} from "../components/GameContent";
+import {questionsStarships} from "../data/questionsLists/questionsStarships";
+import {questionsVehicles} from "../data/questionsLists/questionsVehicles";
+import {questionsSpecies} from "../data/questionsLists/questionsSpecies";
 
 export const Game = () => {
     const dispatch = useAppDispatch();
@@ -25,7 +28,15 @@ export const Game = () => {
             case "planets":
                 questionsToDraw = questionsPlanets;
                 break;
-
+            case "starships":
+                questionsToDraw = questionsStarships;
+                break;
+            case "vehicles":
+                questionsToDraw = questionsVehicles;
+                break;
+            case "species":
+                questionsToDraw = questionsSpecies;
+                break;
         }
 
         const questionsArray: any[] = [];

@@ -15,11 +15,7 @@ export const gameModes = [
   "name": "People",
   "mode": "people"
 },
-  {
-  "name": "Films",
-  "mode": "films"
-},
-  {
+{
   "name": "Species",
   "mode": "species"
 }
