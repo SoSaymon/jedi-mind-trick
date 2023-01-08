@@ -3,7 +3,8 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 interface ApiDataState {
     url: string;
     category: string;
-    data: string;
+    numberOfPossibleData: number;
+    data: any;
     error: string;
     apiDataAvailable: boolean;
 }
@@ -11,6 +12,7 @@ interface ApiDataState {
 const initialState: ApiDataState = {
     url: '',
     category: '',
+    numberOfPossibleData: 0,
     data: '',
     error: '',
     apiDataAvailable: false,
@@ -20,8 +22,11 @@ export const apiDataSlice = createSlice({
     name: "apiData",
     initialState,
     reducers: {
+        setNumberOfPossibleData: (state, action: PayloadAction<number>) => {
+            state.numberOfPossibleData = action.payload;
+        },
         setApiData: (state, action) => {
-            state.data = action.payload;
+            state.data = [...state.data, action.payload];
         },
         setApiError: (state, action) => {
             state.error = action.payload;
@@ -36,6 +41,7 @@ export const apiDataSlice = createSlice({
             state.apiDataAvailable = action.payload;
         },
         resetApiData: (state) => {
+            state.numberOfPossibleData = 0;
             state.data = '';
             state.error = '';
             state.url = '';
@@ -45,5 +51,5 @@ export const apiDataSlice = createSlice({
     }
 });
 
-export const {setApiData, setApiError, setApiDataAvailable, setApiUrl, setApiCategory, resetApiData} = apiDataSlice.actions;
+export const {setNumberOfPossibleData, setApiData, setApiError, setApiDataAvailable, setApiUrl, setApiCategory, resetApiData} = apiDataSlice.actions;
 export default apiDataSlice.reducer;
