@@ -243,14 +243,11 @@ export const GameContent = ({questionNumber}: GameContentProps) => {
             currentAnswers.splice(correctAnswerIndex, 0, answerCreationCorrectAnswer);
             console.log(answers);
             setAnswers(currentAnswers);
+            if (answers.length > 0) {
+                updateAnswersList()
+            }
         }
     }, [answerCreationCorrectAnswer, answerCreationWrongAnswers, correctAnswerIndex]);
-
-    useEffect(() => {
-        if (answers.length > 0) {
-            updateAnswersList();
-        }
-    }, [currentQuestion]);
 
     return (
         <section className={"flex justify-center w-full min-h-full pt-2.5 pb-16 px-5 bg-lotion game"}>
