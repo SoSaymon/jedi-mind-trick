@@ -3,42 +3,168 @@ export const questionsSpecies = [
         "question": "What is the classification of the INSERT_NAME species?",
         "requiredAnotherApiShot": "false",
         "requiredAnswer": "classification",
-        "possibleNAOrUnknownAnswers": ""
+        "possibleNAOrUnknownAnswers": "",
+        "answers": [
+            {
+                "answer": "CORRECT_ANSWER",
+                "correct": "true"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            }
+        ]
     },
     {
         "question": "What is the designation of the INSERT_NAME species?",
         "requiredAnotherApiShot": "false",
         "requiredAnswer": "designation",
-        "possibleNAOrUnknownAnswers": ""
+        "possibleNAOrUnknownAnswers": "",
+        "answers": [
+            {
+                "answer": "CORRECT_ANSWER",
+                "correct": "true"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            }
+        ]
     },
     {
         "question": "What is the average height of members of the INSERT_NAME species?",
         "requiredAnotherApiShot": "false",
         "requiredAnswer": "average_height",
-        "possibleNAOrUnknownAnswers": ""
+        "possibleNAOrUnknownAnswers": "",
+        "answers": [
+            {
+                "answer": "CORRECT_ANSWER",
+                "correct": "true"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            }
+        ]
     },
     {
         "question": "What is the average lifespan of members of the INSERT_NAME species?",
         "requiredAnotherApiShot": "false",
         "requiredAnswer": "average_lifespan",
-        "possibleNAOrUnknownAnswers": ""
+        "possibleNAOrUnknownAnswers": "",
+        "answers": [
+            {
+                "answer": "CORRECT_ANSWER",
+                "correct": "true"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            }
+        ]
     },
     {
         "question": "What hair colors are common among members of the INSERT_NAME species?",
         "requiredAnotherApiShot": "false",
         "requiredAnswer": "hair_colors",
-        "possibleNAOrUnknownAnswers": ""
+        "possibleNAOrUnknownAnswers": "",
+        "answers": [
+            {
+                "answer": "CORRECT_ANSWER",
+                "correct": "true"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            }
+        ]
     },
     {
         "question": "What skin colors are common among members of the INSERT_NAME species?",
         "requiredAnotherApiShot": "false",
         "requiredAnswer": "skin_colors",
-        "possibleNAOrUnknownAnswers": ""
+        "possibleNAOrUnknownAnswers": "",
+        "answers": [
+            {
+                "answer": "CORRECT_ANSWER",
+                "correct": "true"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            }
+        ]
     },
     {
         "question": "What language do members of the INSERT_NAME species speak?",
         "requiredAnotherApiShot": "false",
         "requiredAnswer": "language",
-        "possibleNAOrUnknownAnswers": ""
+        "possibleNAOrUnknownAnswers": "",
+        "answers": [
+            {
+                "answer": "CORRECT_ANSWER",
+                "correct": "true"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            },
+            {
+                "answer": "INCORRECT_ANSWER",
+                "correct": "false"
+            }
+        ]
     }
 ]

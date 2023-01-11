@@ -17,15 +17,11 @@ export const fetchApiDataMiddleware = (store: any) => (next: any) => async (acti
             if (numberOfPossibleData !== 0) {
                 for (let i = 1; i <= numberOfPossibleData; i++) {
                     try {
-                        console.log("payload", action.payload);
-                        console.log("payload + i", action.payload + i);
                         const res = await axios.get(action.payload + i);
-                        console.log("Res Data", res.data);
                         const data = res.data;
                         store.dispatch(setApiData(data));
                     } catch (err) {
                         store.dispatch(setApiError(err));
-                        console.error("Error", err);
                     }
                 }
                 if (store.getState().apiData.data !== '') {
@@ -33,7 +29,7 @@ export const fetchApiDataMiddleware = (store: any) => (next: any) => async (acti
                 }
             }
         } catch (e) {
-            console.error(e);
+            store.dispatch(setApiError(e));
         }
     }
     return next(action);
